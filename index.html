@@ -5,11 +5,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Reiner Wrapped — 10 Years at momox</title>
   <meta name="description" content="Reiner Wrapped — 10 Years at momox / mx-backend (static slider)" />
+
   <style>
     :root{
       --bg: #0b0d12;
-      --card: rgba(255,255,255,0.06);
-      --card2: rgba(255,255,255,0.10);
       --text: rgba(255,255,255,0.92);
       --muted: rgba(255,255,255,0.68);
       --border: rgba(255,255,255,0.14);
@@ -46,25 +45,6 @@
       padding: var(--pad);
       gap: 14px;
     }
-    /* Slide 1 image */
-    .hero{
-      display:grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 16px;
-      align-items: center;
-    }
-    .hero img{
-      width:100%;
-      height:auto;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,0.14);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
-      object-fit: cover;
-    }
-    @media (max-width: 700px){
-      .hero{ grid-template-columns: 1fr; }
-    }
-
 
     .topbar{
       width: min(var(--max), 100%);
@@ -118,7 +98,6 @@
       flex-direction:column;
       justify-content:space-between;
       gap: 16px;
-      overflow: scroll;
     }
 
     .header{ display:flex; align-items:flex-start; justify-content:space-between; gap: 16px; }
@@ -203,6 +182,47 @@
       transition: width 500ms cubic-bezier(.2,.8,.2,1);
     }
 
+    /* Image layout for slides */
+    .with-image{
+      display:grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 16px;
+      align-items: start;
+      margin-top: 14px;
+    }
+    .slideimg{
+      width:100%;
+      height:100%;
+      max-height: 420px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+      object-fit: cover;
+      background: rgba(255,255,255,0.06);
+    }
+    .image-caption{
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* Full-bleed style for final slides */
+    .fullbleed{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .fullbleed img{
+      width:100%;
+      height: min(46vh, 360px);
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+      object-fit: cover;
+      background: rgba(255,255,255,0.06);
+    }
+
     .footer{ display:flex; align-items:center; justify-content:space-between; gap: 12px; color: var(--muted); font-size: 12px; }
 
     .controls{
@@ -246,14 +266,17 @@
 
     .hint{ color: var(--muted); font-size: 12px; white-space: nowrap; }
 
-    @media (max-width: 560px){
+    @media (max-width: 760px){
       body{ overflow:auto; }
       .deck{ height: 70vh; }
       .wrap{ justify-content:flex-start; }
       .hint{ display:none; }
       .card{ grid-column: span 12; }
+      .with-image{ grid-template-columns: 1fr; }
+      .slideimg{ max-height: 320px; }
     }
 
+    /* Print-friendly: one slide per page */
     @media print{
       body{ background:white; color:black; overflow:visible; }
       .topbar, .controls{ display:none !important; }
@@ -269,11 +292,13 @@
       .slides{ display:block; transform:none !important; }
       .slide{ page-break-after: always; min-width:auto; height:auto; padding: 18mm 16mm; }
       .card, .row, .track{ background: #f4f4f4 !important; border: 1px solid #ddd !important; }
-      .kicker, p, .label, .small, .footer{ color:#444 !important; }
+      .kicker, p, .label, .small, .footer, .image-caption{ color:#444 !important; }
       .fill{ background:#999 !important; }
+      .slideimg, .fullbleed img{ box-shadow:none; border: 1px solid #ddd !important; }
     }
   </style>
 </head>
+
 <body>
   <div class="wrap">
     <div class="topbar">
@@ -290,13 +315,13 @@
     <main class="deck" aria-label="Wrapped slider">
       <div class="slides" id="slides">
 
-   <!-- Slide 1 -->
+        <!-- Slide 1 -->
         <section class="slide" aria-label="Slide 1">
           <div>
             <div class="header">
               <div>
                 <div class="kicker">10 years at momox</div>
-                <h1>Reiner Wrapped 🌯</h1>
+                <h1>Reiner Wrapped</h1>
                 <p>mx-backend contributions on <code>master</code></p>
               </div>
               <div class="pill" aria-label="Time range">
@@ -305,56 +330,39 @@
                 <span style="color:rgba(255,255,255,0.75);">2026</span>
               </div>
             </div>
-        
-            <div class="hero" style="margin-top:16px;">
+
+            <div class="with-image">
               <div class="cardgrid">
                 <div class="card">
-                  <div class="metric">
-                    <div class="num">7,356</div>
-                    <div class="label">commits on master</div>
-                  </div>
+                  <div class="metric"><div class="num">7,356</div><div class="label">commits on master</div></div>
                   <div class="small">Repository: mx-backend</div>
                 </div>
-        
                 <div class="card">
-                  <div class="metric">
-                    <div class="num">2,097</div>
-                    <div class="label">Jira stories / tech tasks</div>
-                  </div>
+                  <div class="metric"><div class="num">2,097</div><div class="label">Jira stories / tech tasks</div></div>
                   <div class="small">Delivered work items</div>
                 </div>
-        
                 <div class="card">
-                  <div class="metric">
-                    <div class="num">167</div>
-                    <div class="label">bugs assigned</div>
-                  </div>
+                  <div class="metric"><div class="num">167</div><div class="label">bugs assigned</div></div>
                   <div class="small">Issue ownership</div>
                 </div>
-        
                 <div class="card">
-                  <div class="metric">
-                    <div class="num">121</div>
-                    <div class="label">Friday commits after 16:00</div>
-                  </div>
+                  <div class="metric"><div class="num">121</div><div class="label">Friday commits after 16:00</div></div>
                   <div class="small">Based on commit timestamps</div>
                 </div>
               </div>
-        
-              <!-- Image -->
-              <img
-                src="IMG_6552.JPG"
-                alt="Office moment"
-              />
+
+              <div>
+                <img class="slideimg" src="bjorn_ansi.jpg" alt="Team moment on a boat" />
+                <div class="image-caption">bjorn_ansi.jpg</div>
+              </div>
             </div>
           </div>
-        
+
           <div class="footer">
             <span>Use ← / → or swipe (mobile) to navigate</span>
             <span>Slide 1 / <span class="totalSlides"></span></span>
           </div>
         </section>
-
 
         <!-- Slide 2 -->
         <section class="slide" aria-label="Slide 2">
@@ -363,17 +371,24 @@
             <h2>First recorded commit</h2>
             <p>Earliest commit found for the author on master.</p>
 
-            <div class="card big" style="margin-top:14px;">
-              <div class="row" style="background: rgba(255,255,255,0.04);">
-                <div><strong>Date</strong></div><span>2016-01-07</span>
+            <div class="with-image">
+              <div class="card big">
+                <div class="row" style="background: rgba(255,255,255,0.04);">
+                  <div><strong>Date</strong></div><span>2016-01-07</span>
+                </div>
+                <div class="row">
+                  <div><strong>Hash</strong></div><span><code>dc838751b</code></span>
+                </div>
+                <div class="row">
+                  <div><strong>Message</strong></div><span>Fix typo in order migration introduced in a976654f</span>
+                </div>
+                <div class="small" style="margin-top:10px;">Author: reiner.gerecke@momox.biz</div>
               </div>
-              <div class="row">
-                <div><strong>Hash</strong></div><span><code>dc838751b</code></span>
+
+              <div>
+                <img class="slideimg" src="1 minute.JPG" alt="Office photo with sticky note" />
+                <div class="image-caption">1 minute.JPG</div>
               </div>
-              <div class="row">
-                <div><strong>Message</strong></div><span>Fix typo in order migration introduced in a976654f</span>
-              </div>
-              <div class="small" style="margin-top:10px;">Author: reiner.gerecke@momox.biz</div>
             </div>
           </div>
 
@@ -390,18 +405,27 @@
             <h2>Top files by number of changes</h2>
             <p>Based on file paths in commits for the author.</p>
 
-            <ul class="list">
-              <li class="row"><code>src/mx/settings.py</code><span>249</span></li>
-              <li class="row"><code>src/mx/order/models.py</code><span>169</span></li>
-              <li class="row"><code>pyproject.toml</code><span>135</span></li>
-              <li class="row"><code>.gitlab-ci.yml</code><span>127</span></li>
-              <li class="row"><code>poetry.lock</code><span>98</span></li>
-              <li class="row"><code>requirements/devel.txt</code><span>94</span></li>
-              <li class="row"><code>requirements/testing.txt</code><span>84</span></li>
-              <li class="row"><code>requirements/ci.txt</code><span>82</span></li>
-              <li class="row"><code>src/mx/fashion/order/models.py</code><span>80</span></li>
-              <li class="row"><code>requirements/production.txt</code><span>75</span></li>
-            </ul>
+            <div class="with-image">
+              <div>
+                <ul class="list">
+                  <li class="row"><code>src/mx/settings.py</code><span>249</span></li>
+                  <li class="row"><code>src/mx/order/models.py</code><span>169</span></li>
+                  <li class="row"><code>pyproject.toml</code><span>135</span></li>
+                  <li class="row"><code>.gitlab-ci.yml</code><span>127</span></li>
+                  <li class="row"><code>poetry.lock</code><span>98</span></li>
+                  <li class="row"><code>requirements/devel.txt</code><span>94</span></li>
+                  <li class="row"><code>requirements/testing.txt</code><span>84</span></li>
+                  <li class="row"><code>requirements/ci.txt</code><span>82</span></li>
+                  <li class="row"><code>src/mx/fashion/order/models.py</code><span>80</span></li>
+                  <li class="row"><code>requirements/production.txt</code><span>75</span></li>
+                </ul>
+              </div>
+
+              <div>
+                <img class="slideimg" src="IMG_6555_Lively.GIF" alt="Office moment" />
+                <div class="image-caption">IMG_6555_Lively.GIF</div>
+              </div>
+            </div>
           </div>
 
           <div class="footer">
@@ -417,10 +441,17 @@
             <h2>Commits by hour of day</h2>
             <p>Counts reflect commits grouped by commit hour.</p>
 
-            <div class="card big" style="margin-top:14px;">
-              <div class="bars" id="hourBars"></div>
-              <div class="small" style="margin-top:10px;">
-                Top hours: 09 (509), 11 (455), 14 (437), 08 (437), 15 (427)
+            <div class="with-image">
+              <div class="card big">
+                <div class="bars" id="hourBars"></div>
+                <div class="small" style="margin-top:10px;">
+                  Top hours: 09 (509), 11 (455), 14 (437), 08 (437), 15 (427)
+                </div>
+              </div>
+
+              <div>
+                <img class="slideimg" src="bjorn.JPG" alt="Office photo" />
+                <div class="image-caption">bjorn.JPG</div>
               </div>
             </div>
           </div>
@@ -431,18 +462,24 @@
           </div>
         </section>
 
-        <!-- NEW Slide 5: Rare times -->
+        <!-- Slide 5 -->
         <section class="slide" aria-label="Slide 5">
           <div>
             <div class="kicker">Rare times</div>
             <h2>Least common commit hours</h2>
             <p>Hours with the lowest number of commits.</p>
 
-            <div class="card big" style="margin-top:14px;">
-              <div class="bars" id="rareHourBars"></div>
+            <div class="with-image">
+              <div class="card big">
+                <div class="bars" id="rareHourBars"></div>
+                <div class="small" style="margin-top:10px;">
+                  Rare hours included: 03, 01, 22, 23, 00, 04, 21, 20, 19, 05
+                </div>
+              </div>
 
-              <div class="small" style="margin-top:10px;">
-                Rare hours included: 03, 01, 22, 23, 00, 04, 21, 20, 19, 05
+              <div>
+                <img class="slideimg" src="bjorn_martin.jpg" alt="Outdoor team photo" />
+                <div class="image-caption">bjorn_martin.jpg</div>
               </div>
             </div>
           </div>
@@ -460,19 +497,26 @@
             <h2>Most common first words</h2>
             <p>First token of each subject line, lowercased.</p>
 
-            <div class="card big" style="margin-top:14px;">
-              <ul class="list">
-                <li class="row"><span>merge</span><span>1,417</span></li>
-                <li class="row"><span>fix</span><span>371</span></li>
-                <li class="row"><span>add</span><span>352</span></li>
-                <li class="row"><span>remove</span><span>286</span></li>
-                <li class="row"><span>update</span><span>171</span></li>
-                <li class="row"><span>revert</span><span>120</span></li>
-                <li class="row"><span>use</span><span>99</span></li>
-                <li class="row"><span>move</span><span>94</span></li>
-                <li class="row"><span>adjust</span><span>64</span></li>
-                <li class="row"><span>make</span><span>62</span></li>
-              </ul>
+            <div class="with-image">
+              <div class="card big">
+                <ul class="list">
+                  <li class="row"><span>merge</span><span>1,417</span></li>
+                  <li class="row"><span>fix</span><span>371</span></li>
+                  <li class="row"><span>add</span><span>352</span></li>
+                  <li class="row"><span>remove</span><span>286</span></li>
+                  <li class="row"><span>update</span><span>171</span></li>
+                  <li class="row"><span>revert</span><span>120</span></li>
+                  <li class="row"><span>use</span><span>99</span></li>
+                  <li class="row"><span>move</span><span>94</span></li>
+                  <li class="row"><span>adjust</span><span>64</span></li>
+                  <li class="row"><span>make</span><span>62</span></li>
+                </ul>
+              </div>
+
+              <div>
+                <img class="slideimg" src="alex.jpg" alt="Team photo in a bar" />
+                <div class="image-caption">alex.jpg</div>
+              </div>
             </div>
           </div>
 
@@ -487,24 +531,31 @@
           <div>
             <div class="kicker">Summary</div>
             <h2>10-year recap</h2>
-            <p>Single-page summary for presenting or printing.</p>
+            <p>High-level summary for presenting or printing.</p>
 
-            <div class="cardgrid" style="margin-top:14px;">
-              <div class="card big">
-                <div class="metric"><div class="num">2016–2026</div><div class="label">active period</div></div>
-                <div class="small">First commit: 2016-01-07</div>
+            <div class="with-image">
+              <div class="cardgrid">
+                <div class="card big">
+                  <div class="metric"><div class="num">2016–2026</div><div class="label">active period</div></div>
+                  <div class="small">First commit: 2016-01-07</div>
+                </div>
+                <div class="card">
+                  <div class="metric"><div class="num">7,356</div><div class="label">commits</div></div>
+                </div>
+                <div class="card">
+                  <div class="metric"><div class="num">2,097</div><div class="label">tasks</div></div>
+                </div>
+                <div class="card">
+                  <div class="metric"><div class="num">167</div><div class="label">bugs</div></div>
+                </div>
+                <div class="card">
+                  <div class="metric"><div class="num">121</div><div class="label">Fri ≥16:00</div></div>
+                </div>
               </div>
-              <div class="card">
-                <div class="metric"><div class="num">7,356</div><div class="label">commits</div></div>
-              </div>
-              <div class="card">
-                <div class="metric"><div class="num">2,097</div><div class="label">tasks</div></div>
-              </div>
-              <div class="card">
-                <div class="metric"><div class="num">167</div><div class="label">bugs</div></div>
-              </div>
-              <div class="card">
-                <div class="metric"><div class="num">121</div><div class="label">Fri ≥16:00</div></div>
+
+              <div>
+                <img class="slideimg" src="alle.jpg" alt="Team dinner photo" />
+                <div class="image-caption">alle.jpg</div>
               </div>
             </div>
 
@@ -516,6 +567,58 @@
           <div class="footer">
             <span>Reiner Wrapped · mx-backend</span>
             <span>Slide 7 / <span class="totalSlides"></span></span>
+          </div>
+        </section>
+
+        <!-- Slide 8: Good luck -->
+        <section class="slide" aria-label="Slide 8">
+          <div>
+            <div class="kicker">Next chapter</div>
+            <h2>Wishing you success</h2>
+            <p>Thank you for 10 years at momox and for everything you built with the team.</p>
+
+            <div class="fullbleed">
+              <img src="hope_ambition.JPG" alt="Office plant with notes" />
+              <div class="image-caption">hope_ambition.JPG</div>
+            </div>
+          </div>
+
+          <div class="footer">
+            <span>All the best</span>
+            <span>Slide 8 / <span class="totalSlides"></span></span>
+          </div>
+        </section>
+
+        <!-- Slide 9: Extra photos (didn't fit elsewhere) -->
+        <section class="slide" aria-label="Slide 9">
+          <div>
+            <div class="kicker">Photos</div>
+            <h2>More moments</h2>
+            <p>Additional photos included in the repo.</p>
+
+            <div class="with-image">
+              <div class="card big">
+                <div class="row"><div><strong>Included</strong></div><span>IMG_6552.JPG</span></div>
+                <div class="row"><div><strong>Included</strong></div><span>IMG_0109.HEIC</span></div>
+                <div class="small" style="margin-top:10px;">
+                  Note: HEIC is not supported by all browsers. If it doesn’t render, convert it to JPG and update the filename in the HTML.
+                </div>
+                <div class="small" style="margin-top:10px;">
+                  Quick conversion on macOS:
+                  <code>sips -s format jpeg IMG_0109.HEIC --out IMG_0109.jpg</code>
+                </div>
+              </div>
+
+              <div>
+                <img class="slideimg" src="IMG_6552.JPG" alt="Office photo" />
+                <div class="image-caption">IMG_6552.JPG</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer">
+            <span>Good luck</span>
+            <span>Slide 9 / <span class="totalSlides"></span></span>
           </div>
         </section>
 
@@ -547,7 +650,6 @@
       const nextBtn = document.getElementById('next');
 
       let idx = 0;
-
       function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
 
       function setIndex(next){
@@ -576,7 +678,6 @@
         dotsEl.appendChild(b);
       }
 
-      // Helper to build bars
       function buildBars(container, rows){
         const maxC = Math.max(...rows.map(x=>x.c));
         rows.forEach(({h,c})=>{
@@ -599,28 +700,28 @@
         fills.forEach(f => f.style.width = f.getAttribute('data-w') + '%');
       }
 
-      // Slide 4: Top hours (your already-shared top 10)
-      const topHours = [
+      // Slide 4: Top hours (your provided top 10)
+      buildBars(document.getElementById('hourBars'), [
         {h:'09', c:509},{h:'11', c:455},{h:'14', c:437},{h:'08', c:437},
         {h:'15', c:427},{h:'10', c:418},{h:'13', c:403},{h:'16', c:401},
         {h:'12', c:303},{h:'07', c:253}
-      ];
-      buildBars(document.getElementById('hourBars'), topHours);
+      ]);
 
-      // Slide 5: Rare hours (least common from your output)
-      const rareHours = [
-        {h:'03', c:2},
-        {h:'01', c:4},
-        {h:'22', c:6},
-        {h:'23', c:12},
-        {h:'00', c:14},
-        {h:'04', c:26},
-        {h:'21', c:21},
-        {h:'20', c:36},
-        {h:'19', c:65},
-        {h:'05', c:91}
-      ].sort((a,b)=>a.c-b.c);
-      buildBars(document.getElementById('rareHourBars'), rareHours);
+      // Slide 5: Rare hours (your provided least common)
+      buildBars(document.getElementById('rareHourBars'),
+        [
+          {h:'03', c:2},
+          {h:'01', c:4},
+          {h:'22', c:6},
+          {h:'23', c:12},
+          {h:'00', c:14},
+          {h:'21', c:21},
+          {h:'04', c:26},
+          {h:'20', c:36},
+          {h:'19', c:65},
+          {h:'05', c:91}
+        ].sort((a,b)=>a.c-b.c)
+      );
 
       // Buttons
       prevBtn.addEventListener('click', ()=>setIndex(idx - 1));
