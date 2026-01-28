@@ -98,6 +98,7 @@
       flex-direction:column;
       justify-content:space-between;
       gap: 16px;
+      overflow: scroll;
     }
 
     .header{ display:flex; align-items:flex-start; justify-content:space-between; gap: 16px; }
@@ -130,6 +131,9 @@
     .label{ color: var(--muted); font-size: 14px; }
     .small{ color: var(--muted); font-size: 13px; margin-top: 6px; }
 
+    .with-image .card.big{
+    grid-column: auto;   /* cancel span 12 inside .with-image */
+  }
     .list{
       margin: 10px 0 0 0;
       padding:0;
@@ -352,8 +356,7 @@
               </div>
 
               <div>
-                <img class="slideimg" src="bjorn_ansi.jpg" alt="Team moment on a boat" />
-                <div class="image-caption">bjorn_ansi.jpg</div>
+                <img class="slideimg" src="IMG_6552.JPG" alt="Team moment on a boat" />
               </div>
             </div>
           </div>
@@ -386,8 +389,7 @@
               </div>
 
               <div>
-                <img class="slideimg" src="1 minute.JPG" alt="Office photo with sticky note" />
-                <div class="image-caption">1 minute.JPG</div>
+                <img class="slideimg" src="alex.jpg"  />
               </div>
             </div>
           </div>
@@ -422,8 +424,7 @@
               </div>
 
               <div>
-                <img class="slideimg" src="IMG_6555_Lively.GIF" alt="Office moment" />
-                <div class="image-caption">IMG_6555_Lively.GIF</div>
+                <img class="slideimg" src="bjorn.JPG" />
               </div>
             </div>
           </div>
@@ -450,8 +451,7 @@
               </div>
 
               <div>
-                <img class="slideimg" src="bjorn.JPG" alt="Office photo" />
-                <div class="image-caption">bjorn.JPG</div>
+                <img class="slideimg" src="1 minute.JPG" alt="Office photo" />
               </div>
             </div>
           </div>
@@ -479,7 +479,6 @@
 
               <div>
                 <img class="slideimg" src="bjorn_martin.jpg" alt="Outdoor team photo" />
-                <div class="image-caption">bjorn_martin.jpg</div>
               </div>
             </div>
           </div>
@@ -514,8 +513,7 @@
               </div>
 
               <div>
-                <img class="slideimg" src="alex.jpg" alt="Team photo in a bar" />
-                <div class="image-caption">alex.jpg</div>
+                <img class="slideimg" src="IMG_0109.HEIC" />
               </div>
             </div>
           </div>
@@ -535,11 +533,11 @@
 
             <div class="with-image">
               <div class="cardgrid">
-                <div class="card big">
+                <div class="card big" style="grid-column: span 12">
                   <div class="metric"><div class="num">2016–2026</div><div class="label">active period</div></div>
                   <div class="small">First commit: 2016-01-07</div>
                 </div>
-                <div class="card">
+                <div class="card" style="width: fit-content">
                   <div class="metric"><div class="num">7,356</div><div class="label">commits</div></div>
                 </div>
                 <div class="card">
@@ -575,50 +573,16 @@
           <div>
             <div class="kicker">Next chapter</div>
             <h2>Wishing you success</h2>
-            <p>Thank you for 10 years at momox and for everything you built with the team.</p>
+            <p>Thank you for being with us for as long as we are here :) </p>
 
-            <div class="fullbleed">
-              <img src="hope_ambition.JPG" alt="Office plant with notes" />
-              <div class="image-caption">hope_ambition.JPG</div>
+            <div class="fullbleed" style="height:200%">
+              <img src="IMG_6555_Lively.GIF" />
             </div>
           </div>
 
           <div class="footer">
             <span>All the best</span>
             <span>Slide 8 / <span class="totalSlides"></span></span>
-          </div>
-        </section>
-
-        <!-- Slide 9: Extra photos (didn't fit elsewhere) -->
-        <section class="slide" aria-label="Slide 9">
-          <div>
-            <div class="kicker">Photos</div>
-            <h2>More moments</h2>
-            <p>Additional photos included in the repo.</p>
-
-            <div class="with-image">
-              <div class="card big">
-                <div class="row"><div><strong>Included</strong></div><span>IMG_6552.JPG</span></div>
-                <div class="row"><div><strong>Included</strong></div><span>IMG_0109.HEIC</span></div>
-                <div class="small" style="margin-top:10px;">
-                  Note: HEIC is not supported by all browsers. If it doesn’t render, convert it to JPG and update the filename in the HTML.
-                </div>
-                <div class="small" style="margin-top:10px;">
-                  Quick conversion on macOS:
-                  <code>sips -s format jpeg IMG_0109.HEIC --out IMG_0109.jpg</code>
-                </div>
-              </div>
-
-              <div>
-                <img class="slideimg" src="IMG_6552.JPG" alt="Office photo" />
-                <div class="image-caption">IMG_6552.JPG</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="footer">
-            <span>Good luck</span>
-            <span>Slide 9 / <span class="totalSlides"></span></span>
           </div>
         </section>
 
