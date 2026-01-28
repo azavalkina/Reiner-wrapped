@@ -46,6 +46,25 @@
       padding: var(--pad);
       gap: 14px;
     }
+    /* Slide 1 image */
+    .hero{
+      display:grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 16px;
+      align-items: center;
+    }
+    .hero img{
+      width:100%;
+      height:auto;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+      object-fit: cover;
+    }
+    @media (max-width: 700px){
+      .hero{ grid-template-columns: 1fr; }
+    }
+
 
     .topbar{
       width: min(var(--max), 100%);
@@ -271,7 +290,7 @@
     <main class="deck" aria-label="Wrapped slider">
       <div class="slides" id="slides">
 
-        <!-- Slide 1 -->
+   <!-- Slide 1 -->
         <section class="slide" aria-label="Slide 1">
           <div>
             <div class="header">
@@ -286,32 +305,56 @@
                 <span style="color:rgba(255,255,255,0.75);">2026</span>
               </div>
             </div>
-
-            <div class="cardgrid" style="margin-top:16px;">
-              <div class="card">
-                <div class="metric"><div class="num">7,356</div><div class="label">commits on master</div></div>
-                <div class="small">Repository: mx-backend</div>
+        
+            <div class="hero" style="margin-top:16px;">
+              <div class="cardgrid">
+                <div class="card">
+                  <div class="metric">
+                    <div class="num">7,356</div>
+                    <div class="label">commits on master</div>
+                  </div>
+                  <div class="small">Repository: mx-backend</div>
+                </div>
+        
+                <div class="card">
+                  <div class="metric">
+                    <div class="num">2,097</div>
+                    <div class="label">Jira stories / tech tasks</div>
+                  </div>
+                  <div class="small">Delivered work items</div>
+                </div>
+        
+                <div class="card">
+                  <div class="metric">
+                    <div class="num">167</div>
+                    <div class="label">bugs assigned</div>
+                  </div>
+                  <div class="small">Issue ownership</div>
+                </div>
+        
+                <div class="card">
+                  <div class="metric">
+                    <div class="num">121</div>
+                    <div class="label">Friday commits after 16:00</div>
+                  </div>
+                  <div class="small">Based on commit timestamps</div>
+                </div>
               </div>
-              <div class="card">
-                <div class="metric"><div class="num">2,097</div><div class="label">Jira stories / tech tasks</div></div>
-                <div class="small">Delivered work items</div>
-              </div>
-              <div class="card">
-                <div class="metric"><div class="num">167</div><div class="label">bugs assigned</div></div>
-                <div class="small">Issue ownership</div>
-              </div>
-              <div class="card">
-                <div class="metric"><div class="num">121</div><div class="label">Friday commits after 16:00</div></div>
-                <div class="small">Based on commit timestamps</div>
-              </div>
+        
+              <!-- Image -->
+              <img
+                src="assets/reiner.jpg"
+                alt="Office moment"
+              />
             </div>
           </div>
-
+        
           <div class="footer">
             <span>Use ← / → or swipe (mobile) to navigate</span>
             <span>Slide 1 / <span class="totalSlides"></span></span>
           </div>
         </section>
+
 
         <!-- Slide 2 -->
         <section class="slide" aria-label="Slide 2">
