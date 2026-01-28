@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Reiner Wrapped — 10 Years at momox</title>
+  <meta name="description" content="Reiner Wrapped — 10 Years at momox / mx-backend (static slider)" />
+  <style>
+    :root{
+      --bg: #0b0d12;
+      --card: rgba(255,255,255,0.06);
+      --card2: rgba(255,255,255,0.10);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.68);
+      --border: rgba(255,255,255,0.14);
+      --accent: #86efac;
+      --accent2:#60a5fa;
+      --shadow: 0 20px 60px rgba(0,0,0,0.45);
+      --radius: 24px;
+      --max: 980px;
+      --pad: clamp(16px, 3vw, 28px);
+      --title: clamp(28px, 4.2vw, 54px);
+      --h2: clamp(20px, 2.6vw, 30px);
+      --body: clamp(14px, 1.8vw, 18px);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 20% 10%, rgba(96,165,250,0.18), transparent 60%),
+        radial-gradient(1000px 700px at 85% 20%, rgba(134,239,172,0.16), transparent 55%),
+        radial-gradient(900px 600px at 45% 90%, rgba(167,139,250,0.12), transparent 60%),
+        var(--bg);
+      overflow:hidden;
+    }
+
+    .wrap{
+      height:100%;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      padding: var(--pad);
+      gap: 14px;
+    }
+
+    .topbar{
+      width: min(var(--max), 100%);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      padding: 10px 2px;
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.2px;
+    }
+    .brand{ display:flex; align-items:center; gap:10px; user-select:none; }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 7px 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+    }
+    .dot{
+      width:10px;height:10px;border-radius:50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 0 4px rgba(134,239,172,0.08);
+    }
+
+    .deck{
+      width: min(var(--max), 100%);
+      height: min(64vh, 520px);
+      position:relative;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .slides{
+      height:100%;
+      display:flex;
+      transition: transform 420ms cubic-bezier(.2,.8,.2,1);
+      will-change: transform;
+    }
+
+    .slide{
+      min-width:100%;
+      height:100%;
+      padding: clamp(18px, 3.2vw, 36px);
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap: 16px;
+      overflow: scroll;
+    }
+
+    .header{ display:flex; align-items:flex-start; justify-content:space-between; gap: 16px; }
+    .kicker{
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+    h1{ margin: 10px 0 0 0; font-size: var(--title); line-height: 1.06; letter-spacing: -0.02em; }
+    h2{ margin: 8px 0 0 0; font-size: var(--h2); letter-spacing: -0.01em; }
+    p{ margin: 0; font-size: var(--body); color: var(--muted); line-height: 1.5; }
+
+    .cardgrid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 12px;
+    }
+    .card{
+      grid-column: span 6;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 18px;
+      padding: 14px 14px;
+      overflow:hidden;
+    }
+    .card.big{ grid-column: span 12; }
+    .metric{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
+    .num{ font-size: clamp(26px, 4vw, 44px); font-weight: 800; letter-spacing: -0.02em; }
+    .label{ color: var(--muted); font-size: 14px; }
+    .small{ color: var(--muted); font-size: 13px; margin-top: 6px; }
+
+    .list{
+      margin: 10px 0 0 0;
+      padding:0;
+      list-style:none;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .row{
+      display:flex;
+      justify-content:space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(0,0,0,0.18);
+      border: 1px solid rgba(255,255,255,0.10);
+      font-size: 14px;
+    }
+    .row code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 13px;
+      color: rgba(255,255,255,0.86);
+    }
+    .row span{
+      color: rgba(255,255,255,0.85);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .bars{ margin-top: 10px; display:flex; flex-direction:column; gap: 10px; }
+    .barrow{
+      display:grid;
+      grid-template-columns: 54px 1fr 52px;
+      align-items:center;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .track{
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      overflow:hidden;
+    }
+    .fill{
+      height:100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent2), var(--accent));
+      transition: width 500ms cubic-bezier(.2,.8,.2,1);
+    }
+
+    .footer{ display:flex; align-items:center; justify-content:space-between; gap: 12px; color: var(--muted); font-size: 12px; }
+
+    .controls{
+      width: min(var(--max), 100%);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+    }
+    .btns{ display:flex; gap: 10px; align-items:center; }
+    button{
+      appearance:none;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.07);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 14px;
+      cursor:pointer;
+      font-size: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.22);
+      transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+      user-select:none;
+    }
+    button:hover{ transform: translateY(-1px); background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.26); }
+    button:active{ transform: translateY(0px); }
+    button:focus{ outline: 2px solid rgba(96,165,250,0.55); outline-offset: 2px; }
+
+    .dots{ display:flex; gap: 8px; align-items:center; justify-content:center; flex: 1; }
+    .dots button{
+      width: 11px; height: 11px; padding: 0;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.10);
+      box-shadow:none;
+    }
+    .dots button[aria-current="true"]{
+      background: linear-gradient(135deg, var(--accent2), var(--accent));
+      border-color: rgba(255,255,255,0.30);
+      transform:none;
+    }
+
+    .hint{ color: var(--muted); font-size: 12px; white-space: nowrap; }
+
+    @media (max-width: 560px){
+      body{ overflow:auto; }
+      .deck{ height: 70vh; }
+      .wrap{ justify-content:flex-start; }
+      .hint{ display:none; }
+      .card{ grid-column: span 12; }
+    }
+
+    @media print{
+      body{ background:white; color:black; overflow:visible; }
+      .topbar, .controls{ display:none !important; }
+      .wrap{ padding:0; }
+      .deck{
+        width: 100%;
+        height: auto;
+        border:none;
+        box-shadow:none;
+        background:none;
+        overflow:visible;
+      }
+      .slides{ display:block; transform:none !important; }
+      .slide{ page-break-after: always; min-width:auto; height:auto; padding: 18mm 16mm; }
+      .card, .row, .track{ background: #f4f4f4 !important; border: 1px solid #ddd !important; }
+      .kicker, p, .label, .small, .footer{ color:#444 !important; }
+      .fill{ background:#999 !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <span class="pill"><span class="dot"></span><strong>Reiner Wrapped</strong></span>
+        <span>2016–2026 · momox · mx-backend</span>
+      </div>
+      <div class="pill" title="Static page">
+        <span aria-hidden="true">●</span>
+        <span>Static HTML</span>
+      </div>
+    </div>
+
+    <main class="deck" aria-label="Wrapped slider">
+      <div class="slides" id="slides">
+
+        <!-- Slide 1 -->
+        <section class="slide" aria-label="Slide 1">
+          <div>
+            <div class="header">
+              <div>
+                <div class="kicker">10 years at momox</div>
+                <h1>Reiner Wrapped</h1>
+                <p>mx-backend contributions on <code>master</code></p>
+              </div>
+              <div class="pill" aria-label="Time range">
+                <span style="color:rgba(255,255,255,0.75);">2016</span>
+                <span style="opacity:0.6;">→</span>
+                <span style="color:rgba(255,255,255,0.75);">2026</span>
+              </div>
+            </div>
+
+            <div class="cardgrid" style="margin-top:16px;">
+              <div class="card">
+                <div class="metric"><div class="num">7,356</div><div class="label">commits on master</div></div>
+                <div class="small">Repository: mx-backend</div>
+              </div>
+              <div class="card">
+                <div class="metric"><div class="num">2,097</div><div class="label">Jira stories / tech tasks</div></div>
+                <div class="small">Delivered work items</div>
+              </div>
+              <div class="card">
+                <div class="metric"><div class="num">167</div><div class="label">bugs assigned</div></div>
+                <div class="small">Issue ownership</div>
+              </div>
+              <div class="card">
+                <div class="metric"><div class="num">121</div><div class="label">Friday commits after 16:00</div></div>
+                <div class="small">Based on commit timestamps</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer">
+            <span>Use ← / → or swipe (mobile) to navigate</span>
+            <span>Slide 1 / <span class="totalSlides"></span></span>
+          </div>
+        </section>
+
+        <!-- Slide 2 -->
+        <section class="slide" aria-label="Slide 2">
+          <div>
+            <div class="kicker">Starting point</div>
+            <h2>First recorded commit</h2>
+            <p>Earliest commit found for the author on master.</p>
+
+            <div class="card big" style="margin-top:14px;">
+              <div class="row" style="background: rgba(255,255,255,0.04);">
+                <div><strong>Date</strong></div><span>2016-01-07</span>
+              </div>
+              <div class="row">
+                <div><strong>Hash</strong></div><span><code>dc838751b</code></span>
+              </div>
+              <div class="row">
+                <div><strong>Message</strong></div><span>Fix typo in order migration introduced in a976654f</span>
+              </div>
+              <div class="small" style="margin-top:10px;">Author: reiner.gerecke@momox.biz</div>
+            </div>
+          </div>
+
+          <div class="footer">
+            <span>Data source: git log</span>
+            <span>Slide 2 / <span class="totalSlides"></span></span>
+          </div>
+        </section>
+
+        <!-- Slide 3 -->
+        <section class="slide" aria-label="Slide 3">
+          <div>
+            <div class="kicker">Most changed files</div>
+            <h2>Top files by number of changes</h2>
+            <p>Based on file paths in commits for the author.</p>
+
+            <ul class="list">
+              <li class="row"><code>src/mx/settings.py</code><span>249</span></li>
+              <li class="row"><code>src/mx/order/models.py</code><span>169</span></li>
+              <li class="row"><code>pyproject.toml</code><span>135</span></li>
+              <li class="row"><code>.gitlab-ci.yml</code><span>127</span></li>
+              <li class="row"><code>poetry.lock</code><span>98</span></li>
+              <li class="row"><code>requirements/devel.txt</code><span>94</span></li>
+              <li class="row"><code>requirements/testing.txt</code><span>84</span></li>
+              <li class="row"><code>requirements/ci.txt</code><span>82</span></li>
+              <li class="row"><code>src/mx/fashion/order/models.py</code><span>80</span></li>
+              <li class="row"><code>requirements/production.txt</code><span>75</span></li>
+            </ul>
+          </div>
+
+          <div class="footer">
+            <span>Top 10 shown</span>
+            <span>Slide 3 / <span class="totalSlides"></span></span>
+          </div>
+        </section>
+
+        <!-- Slide 4 -->
+        <section class="slide" aria-label="Slide 4">
+          <div>
+            <div class="kicker">Time distribution</div>
+            <h2>Commits by hour of day</h2>
+            <p>Counts reflect commits grouped by commit hour.</p>
+
+            <div class="card big" style="margin-top:14px;">
+              <div class="bars" id="hourBars"></div>
+              <div class="small" style="margin-top:10px;">
+                Top hours: 09 (509), 11 (455), 14 (437), 08 (437), 15 (427)
+              </div>
+            </div>
+          </div>
+
+          <div class="footer">
+            <span>Local time based on commit timestamps</span>
+            <span>Slide 4 / <span class="totalSlides"></span></span>
+          </div>
+        </section>
+
+        <!-- NEW Slide 5: Rare times -->
+        <section class="slide" aria-label="Slide 5">
+          <div>
+            <div class="kicker">Rare times</div>
+            <h2>Least common commit hours</h2>
+            <p>Hours with the lowest number of commits.</p>
+
+            <div class="card big" style="margin-top:14px;">
+              <div class="bars" id="rareHourBars"></div>
+
+              <div class="small" style="margin-top:10px;">
+                Rare hours included: 03, 01, 22, 23, 00, 04, 21, 20, 19, 05
+              </div>
+            </div>
+          </div>
+
+          <div class="footer">
+            <span>Grouped by hour (ascending frequency)</span>
+            <span>Slide 5 / <span class="totalSlides"></span></span>
+          </div>
+        </section>
+
+        <!-- Slide 6 -->
+        <section class="slide" aria-label="Slide 6">
+          <div>
+            <div class="kicker">Commit message patterns</div>
+            <h2>Most common first words</h2>
+            <p>First token of each subject line, lowercased.</p>
+
+            <div class="card big" style="margin-top:14px;">
+              <ul class="list">
+                <li class="row"><span>merge</span><span>1,417</span></li>
+                <li class="row"><span>fix</span><span>371</span></li>
+                <li class="row"><span>add</span><span>352</span></li>
+                <li class="row"><span>remove</span><span>286</span></li>
+                <li class="row"><span>update</span><span>171</span></li>
+                <li class="row"><span>revert</span><span>120</span></li>
+                <li class="row"><span>use</span><span>99</span></li>
+                <li class="row"><span>move</span><span>94</span></li>
+                <li class="row"><span>adjust</span><span>64</span></li>
+                <li class="row"><span>make</span><span>62</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="footer">
+            <span>Top 10 shown</span>
+            <span>Slide 6 / <span class="totalSlides"></span></span>
+          </div>
+        </section>
+
+        <!-- Slide 7 -->
+        <section class="slide" aria-label="Slide 7">
+          <div>
+            <div class="kicker">Summary</div>
+            <h2>10-year recap</h2>
+            <p>Single-page summary for presenting or printing.</p>
+
+            <div class="cardgrid" style="margin-top:14px;">
+              <div class="card big">
+                <div class="metric"><div class="num">2016–2026</div><div class="label">active period</div></div>
+                <div class="small">First commit: 2016-01-07</div>
+              </div>
+              <div class="card">
+                <div class="metric"><div class="num">7,356</div><div class="label">commits</div></div>
+              </div>
+              <div class="card">
+                <div class="metric"><div class="num">2,097</div><div class="label">tasks</div></div>
+              </div>
+              <div class="card">
+                <div class="metric"><div class="num">167</div><div class="label">bugs</div></div>
+              </div>
+              <div class="card">
+                <div class="metric"><div class="num">121</div><div class="label">Fri ≥16:00</div></div>
+              </div>
+            </div>
+
+            <div class="small" style="margin-top:10px;">
+              Tip: Print this page (Ctrl/Cmd+P). The print stylesheet will place one slide per page.
+            </div>
+          </div>
+
+          <div class="footer">
+            <span>Reiner Wrapped · mx-backend</span>
+            <span>Slide 7 / <span class="totalSlides"></span></span>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <div class="controls" aria-label="Slider controls">
+      <div class="btns">
+        <button id="prev" type="button" aria-label="Previous slide">← Prev</button>
+        <button id="next" type="button" aria-label="Next slide">Next →</button>
+      </div>
+
+      <div class="dots" id="dots" aria-label="Slide selector"></div>
+
+      <div class="hint" aria-hidden="true">← → keys · swipe · click dots</div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const slidesEl = document.getElementById('slides');
+      const slideCount = slidesEl.children.length;
+
+      // Fill "total slides" placeholders
+      document.querySelectorAll('.totalSlides').forEach(el => el.textContent = String(slideCount));
+
+      const dotsEl = document.getElementById('dots');
+      const prevBtn = document.getElementById('prev');
+      const nextBtn = document.getElementById('next');
+
+      let idx = 0;
+
+      function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
+
+      function setIndex(next){
+        idx = clamp(next, 0, slideCount - 1);
+        slidesEl.style.transform = `translateX(${-idx * 100}%)`;
+
+        [...dotsEl.querySelectorAll('button')].forEach((b,i)=>{
+          b.setAttribute('aria-current', i === idx ? 'true' : 'false');
+          b.setAttribute('tabindex', i === idx ? '0' : '-1');
+        });
+
+        prevBtn.disabled = idx === 0;
+        nextBtn.disabled = idx === slideCount - 1;
+
+        // Animate bars when their slide is visible
+        if(idx === 3) animateBars(document.getElementById('hourBars'));
+        if(idx === 4) animateBars(document.getElementById('rareHourBars'));
+      }
+
+      // Dots
+      for(let i=0;i<slideCount;i++){
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.setAttribute('aria-label', `Go to slide ${i+1}`);
+        b.addEventListener('click', ()=>setIndex(i));
+        dotsEl.appendChild(b);
+      }
+
+      // Helper to build bars
+      function buildBars(container, rows){
+        const maxC = Math.max(...rows.map(x=>x.c));
+        rows.forEach(({h,c})=>{
+          const row = document.createElement('div');
+          row.className = 'barrow';
+          row.innerHTML = `
+            <div>${h}:00</div>
+            <div class="track"><div class="fill" data-w="${(c/maxC*100).toFixed(1)}"></div></div>
+            <div style="text-align:right;color:rgba(255,255,255,0.85);font-variant-numeric:tabular-nums;">${c}</div>
+          `;
+          container.appendChild(row);
+        });
+      }
+
+      function animateBars(container){
+        if(!container) return;
+        const fills = container.querySelectorAll('.fill');
+        fills.forEach(f => f.style.width = '0%');
+        void container.offsetWidth; // reflow
+        fills.forEach(f => f.style.width = f.getAttribute('data-w') + '%');
+      }
+
+      // Slide 4: Top hours (your already-shared top 10)
+      const topHours = [
+        {h:'09', c:509},{h:'11', c:455},{h:'14', c:437},{h:'08', c:437},
+        {h:'15', c:427},{h:'10', c:418},{h:'13', c:403},{h:'16', c:401},
+        {h:'12', c:303},{h:'07', c:253}
+      ];
+      buildBars(document.getElementById('hourBars'), topHours);
+
+      // Slide 5: Rare hours (least common from your output)
+      const rareHours = [
+        {h:'03', c:2},
+        {h:'01', c:4},
+        {h:'22', c:6},
+        {h:'23', c:12},
+        {h:'00', c:14},
+        {h:'04', c:26},
+        {h:'21', c:21},
+        {h:'20', c:36},
+        {h:'19', c:65},
+        {h:'05', c:91}
+      ].sort((a,b)=>a.c-b.c);
+      buildBars(document.getElementById('rareHourBars'), rareHours);
+
+      // Buttons
+      prevBtn.addEventListener('click', ()=>setIndex(idx - 1));
+      nextBtn.addEventListener('click', ()=>setIndex(idx + 1));
+
+      // Keyboard
+      window.addEventListener('keydown', (e)=>{
+        if(e.key === 'ArrowLeft') setIndex(idx - 1);
+        if(e.key === 'ArrowRight') setIndex(idx + 1);
+      });
+
+      // Touch swipe
+      let startX = null;
+      let startY = null;
+      const threshold = 40;
+
+      slidesEl.addEventListener('touchstart', (e)=>{
+        if(!e.touches || e.touches.length !== 1) return;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+      }, {passive:true});
+
+      slidesEl.addEventListener('touchend', (e)=>{
+        if(startX == null || startY == null) return;
+        const t = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0] : null;
+        if(!t) { startX = startY = null; return; }
+        const dx = t.clientX - startX;
+        const dy = t.clientY - startY;
+
+        if(Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > threshold){
+          if(dx < 0) setIndex(idx + 1);
+          else setIndex(idx - 1);
+        }
+        startX = startY = null;
+      }, {passive:true});
+
+      // Init
+      setIndex(0);
+    })();
+  </script>
+</body>
+</html>
